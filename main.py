@@ -2,7 +2,6 @@ import os
 from random import random
 from time import sleep
 import cursor
-cursor.hide()
 
 THRESHOLD = 0.5
 
@@ -62,12 +61,39 @@ def validate_cell(coordinate, height, width):
         return True
 
 def main():
-    board = init_board(50, 50)
+    print('Welcome to Conway\'s Game of Life.')
+    dec = ''
+    board = []
+    while dec == '':
+        choice = input('Would you like to load a file (1), or choose a random board? (2): ')
+        if choice == '1' or choice == '2':
+            dec = int(choice)
+    if dec == 1:
+        filename = input('What is the filepath? ')
+        try:
+            with open(filename) as file:
+                h, w = 0, 0
+                for line in file:
+                    newln = []
+                    w = 0
+                    for char in line:
+                        print(line)
+                        if char != '\n' : newln.append(int(char))
+                        w += 1
+                    board.append(newln)
+                    h += 1
+        except:
+            print(f'File {filename} not found!')
+            return 0
+    else:
+        board = init_board(50, 50)
+
     # Constant loop to update game
+    cursor.hide()
     while True:
         os.system('clear')
         render(board)
         board = next_board_state(board)
-        sleep(0.3)
+        sleep()
     
 main()
