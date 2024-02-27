@@ -72,16 +72,12 @@ def main():
         filename = input('What is the filepath? ')
         try:
             with open(filename) as file:
-                h, w = 0, 0
                 for line in file:
                     newln = []
-                    w = 0
                     for char in line:
                         print(line)
                         if char != '\n' : newln.append(int(char))
-                        w += 1
                     board.append(newln)
-                    h += 1
         except:
             print(f'File {filename} not found!')
             return 0
