@@ -27,28 +27,29 @@ def render(board):
 
 # Finds the next board based off the game of life rules
 def next_board_state(board):
-    new_board = board.copy()
+    new_board = []
     for h in range(len(board)):
+        row = []
         for w in range(len(board[h])):
             neighbors = 0
             points = [(h-1, w), (h+1, w), (h-1, w-1), (h, w-1),
             (h+1, w-1), (h-1, w+1), (h, w+1), (h+1, w+1)]
-            # Gets the list of valid checkable points
-            neighbor_points = [neighbor for neighbor in points if validate_cell(neighbor, len(board), len(board[0]))]
             # A living neighbor is represented by a 1
-            for pt in neighbor_points:
-                neighbors += board[pt[0]][pt[1]]
+            for pt in points:
+                if validate_cell(pt, len(board), len(board[h])) : neighbors += board[pt[0]][pt[1]]
             
             # Basic game of life rules for whether a cell is alive or dead
             if (neighbors == 0 or neighbors == 1) and board[h][w] == 1:
-                new_board[h][w] = 0
+                row.append(0)
             elif (neighbors == 2 or neighbors == 3) and board[h][w] == 1:
-                new_board[h][w] = 1
+                row.append(1)
             elif neighbors > 3 and board[h][w] == 1:
-                new_board[h][w] = 0
+                row.append(0)
             elif neighbors == 3 and board[h][w] == 0:
-                new_board[h][w] = 1
-
+                row.append(1)
+            else:
+                row.append(0)
+        new_board.append(row)
     return new_board
 
 # Verifies that a given set of coordinates is valid
