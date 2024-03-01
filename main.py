@@ -91,6 +91,6 @@ def main():
         os.system('clear')
         render(board)
         board = next_board_state(board)
-        sleep(0.3)
+        sleep(0.042)
     
 main()
